@@ -1,9 +1,5 @@
-import LandingShell from "@/components/landing/LandingShell";
+import { AuthWrapper } from "@/components/auth/AuthWrapper";
 
-export const metadata = {
-  title: "MyApp – Manage Expenses Smartly",
-};
-
-export default function HomePage() {
-  return <LandingShell />;
+export default function Home() {
+  return <AuthWrapper />;
 }

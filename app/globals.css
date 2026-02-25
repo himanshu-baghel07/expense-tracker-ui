@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+AT:ital,wght@0,100..400;1,100..400&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -16,10 +17,21 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", sans-serif;
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: "Playwrite AT", cursive;
 }
 
 * {
@@ -54,4 +66,31 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+/* Sheet/Drawer slide animations (mobile) */
+@keyframes sheet-slide-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+[data-state="open"].sheet-drawer {
+  animation: sheet-slide-in 0.25s ease-out;
+}
+
+[data-state="closed"].sheet-drawer {
+  animation: sheet-slide-out 0.2s ease-in;
 }
