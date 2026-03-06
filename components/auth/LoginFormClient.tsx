@@ -79,7 +79,7 @@ const LoginFormClient = ({ setViewMode }: LoginFormClientProps) => {
         </Button>
       </div>
 
-      <div className="mt-6 text-center text-sm text-gray-600">
+      <div className="mt-6 text-center text-sm text-gray-200">
         Are you new?{" "}
         <span
           onClick={() => setViewMode("signup")}
