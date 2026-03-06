@@ -30,7 +30,10 @@ const CHART_COLORS = [
   "#4b5563", // gray-600
 ];
 
-const TIME_FILTER_OPTIONS: { value: "24h" | "7d" | "30d" | "90d" | "all"; label: string }[] = [
+const TIME_FILTER_OPTIONS: {
+  value: "24h" | "7d" | "30d" | "90d" | "all";
+  label: string;
+}[] = [
   { value: "24h", label: "Last 24 hours" },
   { value: "7d", label: "Last 7 days" },
   { value: "30d", label: "Last 30 days" },
@@ -42,7 +45,9 @@ export default function CategoryBreakdown() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState(0);
-  const [timeFilter, setTimeFilter] = useState<"24h" | "7d" | "30d" | "90d" | "all">("30d");
+  const [timeFilter, setTimeFilter] = useState<
+    "24h" | "7d" | "30d" | "90d" | "all"
+  >("30d");
 
   useEffect(() => {
     fetchCategories();
@@ -83,7 +88,17 @@ export default function CategoryBreakdown() {
     fill: CHART_COLORS[i % CHART_COLORS.length],
   }));
 
-  const renderTooltip = ({ active, payload }: { active?: boolean; payload?: { name: string; value: number; payload: { count: number } }[] }) => {
+  const renderTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean;
+    payload?: readonly {
+      name: string;
+      value: number;
+      payload: { count: number };
+    }[];
+  }) => {
     if (!active || !payload?.length) return null;
     const item = payload[0];
     return (
@@ -91,7 +106,8 @@ export default function CategoryBreakdown() {
         <p className="font-medium text-white">{item.name}</p>
         <p className="text-sm text-gray-300">{formatCurrency(item.value)}</p>
         <p className="text-xs text-gray-500">
-          {item.payload.count} transaction{item.payload.count !== 1 ? "s" : ""} · {getPercentage(item.value)}%
+          {item.payload.count} transaction{item.payload.count !== 1 ? "s" : ""}{" "}
+          · {getPercentage(item.value)}%
         </p>
       </div>
     );
@@ -181,8 +197,13 @@ export default function CategoryBreakdown() {
                   <Tooltip content={renderTooltip} />
                   <Legend
                     formatter={(value, entry) => {
-                      const payload = entry?.payload as { value?: number } | undefined;
-                      const pct = payload?.value != null ? getPercentage(payload.value) : "0";
+                      const payload = entry?.payload as
+                        | { value?: number }
+                        | undefined;
+                      const pct =
+                        payload?.value != null
+                          ? getPercentage(payload.value)
+                          : "0";
                       return (
                         <span className="text-sm text-gray-300">
                           {value} ({pct}%)
