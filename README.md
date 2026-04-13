@@ -80,36 +80,6 @@ pnpm build
 pnpm start
 ```
 
-## 🌐 API Endpoints
-
-The application integrates with the following backend APIs:
-
-### Authentication
-
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `POST /api/auth/logout` - Logout user
-
-### User Profile
-
-- `GET /api/user/get-profile` - Get user profile
-- `PUT /api/user/update-profile` - Update profile (supports FormData for avatar)
-
-### Expenses
-
-- `GET /api/expenses` - Get all expenses (with pagination & filters)
-- `POST /api/expenses` - Create new expense
-- `GET /api/expenses/:id` - Get single expense
-- `PUT /api/expenses/:id` - Update expense
-- `DELETE /api/expenses/:id` - Delete expense
-
-### Analytics
-
-- `GET /api/expenses/summary` - Get expense summary
-- `GET /api/expenses/chart/category` - Get category breakdown
-- `GET /api/expenses/chart/monthly` - Get monthly trends
-
-## 📱 Pages & Components
 
 ### Pages
 
@@ -173,53 +143,8 @@ expense-tracker-ui/
 └── package.json
 ```
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
-
-### Environment Variables
-
-Make sure to set the following environment variables in your deployment platform:
-
-- `NEXT_PUBLIC_BASE_URL` - Backend API URL
-
-## 📝 API Categories
-
-The application supports 8 expense categories:
-
-1. Food
-2. Transport
-3. Entertainment
-4. Shopping
-5. Healthcare
-6. Utilities
-7. Education
-8. Other
-
-## 🎨 Color Palette
-
-- **Background**: Pure Black (#000000)
-- **Foreground**: Off-white (#EDEDED)
-- **Primary**: Blue (#2563EB) to Purple (#9333EA)
-- **Accent Colors**: Category-specific (Orange, Blue, Purple, Pink, Red, Green, Indigo, Gray)
-- **Borders**: Dark Gray (#1F2937)
-
-## 📄 License
-
-This project is private and proprietary.
-
-## 👤 Author
-
-Developed with ❤️ using Google Deepmind's Antigravity AI Assistant
-
 ---
+### 🚧 Project Status
 
-**Note**: This is a production-ready application with comprehensive error handling, loading states, and user-friendly interfaces. All API calls include proper error handling and user feedback via toast notifications.
+> **Note:** This project is currently **in progress**. Several core modules such as authentication, profile management, and expense tracking are completed, while additional features and improvements are still under active development.
+
