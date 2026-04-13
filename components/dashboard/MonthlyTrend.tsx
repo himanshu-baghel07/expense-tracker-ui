@@ -17,7 +17,10 @@ interface MonthlyData {
   count: number;
 }
 
-const PERIOD_OPTIONS: { value: "weekly" | "monthly" | "yearly"; label: string }[] = [
+const PERIOD_OPTIONS: {
+  value: "weekly" | "monthly" | "yearly";
+  label: string;
+}[] = [
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
   { value: "yearly", label: "Yearly" },
@@ -26,7 +29,9 @@ const PERIOD_OPTIONS: { value: "weekly" | "monthly" | "yearly"; label: string }[
 export default function MonthlyTrend() {
   const [data, setData] = useState<MonthlyData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [period, setPeriod] = useState<"weekly" | "monthly" | "yearly">("monthly");
+  const [period, setPeriod] = useState<"weekly" | "monthly" | "yearly">(
+    "monthly",
+  );
 
   useEffect(() => {
     fetchTrendData();
@@ -34,10 +39,10 @@ export default function MonthlyTrend() {
 
   const fetchTrendData = async () => {
     setIsLoading(true);
-    const result = await getTrendData({ period });
+    const [result] = await Promise.allSettled([getTrendData({ period })]);
 
-    if (result.success) {
-      const raw = result.data.data || [];
+    if (result.status === "fulfilled" && result.value.success) {
+      const raw = result.value.data.data || [];
       setData(Array.isArray(raw) ? raw : []);
     }
     setIsLoading(false);
@@ -52,8 +57,18 @@ export default function MonthlyTrend() {
 
   const getMonthName = (month: number) => {
     const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
     return months[month - 1] ?? "—";
   };
@@ -102,8 +117,18 @@ export default function MonthlyTrend() {
     );
   }
 
-  const summaryLabel = period === "weekly" ? "Total Weeks" : period === "yearly" ? "Total Years" : "Total Months";
-  const highestLabel = period === "weekly" ? "Highest Week" : period === "yearly" ? "Highest Year" : "Highest Month";
+  const summaryLabel =
+    period === "weekly"
+      ? "Total Weeks"
+      : period === "yearly"
+        ? "Total Years"
+        : "Total Months";
+  const highestLabel =
+    period === "weekly"
+      ? "Highest Week"
+      : period === "yearly"
+        ? "Highest Year"
+        : "Highest Month";
 
   return (
     <Card>
@@ -139,7 +164,11 @@ export default function MonthlyTrend() {
                   maxAmount > 0 ? (item.totalAmount / maxAmount) * 100 : 0;
                 return (
                   <div
-                    key={item._id ? `${item._id.year ?? ""}-${month}-${index}` : index}
+                    key={
+                      item._id
+                        ? `${item._id.year ?? ""}-${month}-${index}`
+                        : index
+                    }
                     className="flex flex-col items-center gap-2 flex-1"
                   >
                     <div className="w-full flex items-end h-full">

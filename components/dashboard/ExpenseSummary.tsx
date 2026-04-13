@@ -25,10 +25,12 @@ export default function ExpenseSummary() {
 
   const fetchSummary = async () => {
     setIsLoading(true);
-    const result = await getExpenseSummary();
+    const [result] = await Promise.allSettled([getExpenseSummary()]);
 
-    if (result.success) {
-      setSummary(result.data.data || { totalAmount: 0, count: 0, average: 0 });
+    if (result.status === "fulfilled" && result.value.success) {
+      setSummary(
+        result.value.data.data || { totalAmount: 0, count: 0, average: 0 },
+      );
     }
     setIsLoading(false);
   };

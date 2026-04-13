@@ -55,10 +55,12 @@ export default function CategoryBreakdown() {
 
   const fetchCategories = async () => {
     setIsLoading(true);
-    const result = await getCategoryChartData({ timeFilter });
+    const [result] = await Promise.allSettled([
+      getCategoryChartData({ timeFilter }),
+    ]);
 
-    if (result.success) {
-      const data = result.data.data || [];
+    if (result.status === "fulfilled" && result.value.success) {
+      const data = result.value.data.data || [];
       setCategories(data);
       const totalAmount = data.reduce(
         (sum: number, cat: CategoryData) => sum + cat.totalAmount,

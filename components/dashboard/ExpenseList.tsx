@@ -45,16 +45,18 @@ export default function ExpenseList() {
 
   const fetchExpenses = async () => {
     setIsLoading(true);
-    const result = await getAllExpenses({
-      page: currentPage,
-      limit: 10,
-      sortBy: "date",
-      sortOrder: "desc",
-    });
+    const [result] = await Promise.allSettled([
+      getAllExpenses({
+        page: currentPage,
+        limit: 10,
+        sortBy: "date",
+        sortOrder: "desc",
+      }),
+    ]);
 
-    if (result.success) {
-      setExpenses(result.data.data || []);
-      setTotalPages(result.data.totalPages || 1);
+    if (result.status === "fulfilled" && result.value.success) {
+      setExpenses(result.value.data.data || []);
+      setTotalPages(result.value.data.totalPages || 1);
     } else {
       toast.error("Failed to fetch expenses");
     }
