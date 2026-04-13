@@ -6,7 +6,9 @@ import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
 import { LoginFormData, loginSchema } from "@/utils/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -15,6 +17,8 @@ interface LoginFormClientProps {
 }
 
 const LoginFormClient = ({ setViewMode }: LoginFormClientProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -61,14 +65,24 @@ const LoginFormClient = ({ setViewMode }: LoginFormClientProps) => {
 
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Test@123"
-            {...register("password")}
-            disabled={isSubmitting}
-            className={errors.password ? "border-red-500" : ""}
-          />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Test@123"
+              {...register("password")}
+              disabled={isSubmitting}
+              className={`pr-10 ${errors.password ? "border-red-500" : ""}`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
           {errors.password && (
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
